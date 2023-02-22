@@ -1,11 +1,11 @@
 import { addDoc } from "firebase/firestore";
 import { notesRef } from "../../firebaseConfig";
 
-const useAddNewNote = async (title, body) => {
+const useAddNote = async (title, body) => {
   await addDoc(notesRef, {
     title: title,
     body: body,
   });
 };
 
-export default useAddNewNote;
+export default useAddNote;

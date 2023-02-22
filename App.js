@@ -1,28 +1,39 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button } from "react-native";
-import useFetchNotes from "./src/customHooks/useFetchNotes";
-import useAddNewNote from "./src/customHooks/useAddNote";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Home from "./src/Home";
+import AddNote from "./src/AddNote";
+import Header from "./src/Header";
+
+const Stack = createStackNavigator();
 
 export default function App() {
-  const notes = useFetchNotes();
-  console.log("notes be like", notes);
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <Button
-        title="Add Note"
-        onPress={() => useAddNewNote("title 3", "body 3")}
-      />
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          component={Home}
+          name="Home"
+          options={{
+            headerTitle: () => <Header title="Notes" />,
+            headerStyle: {
+              backgroundColor: "purple",
+              height: 120,
+            },
+          }}
+        />
+        <Stack.Screen
+          component={AddNote}
+          name="addNote"
+          options={{
+            headerTitle: () => <Header title="Add Note" />,
+            headerStyle: {
+              backgroundColor: "purple",
+              height: 120,
+            },
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

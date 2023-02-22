@@ -10,12 +10,12 @@ const useFetchNotes = () => {
       const querySnapshot = await getDocs(notesRef);
       querySnapshot.forEach((doc) => {
         const { title, body } = doc.data();
-        notesCollection.push({ title, body });
+        notesCollection.push({ title, body, id: doc.id });
       });
       setNotes(notesCollection);
     };
     fetchNotes();
-  }, []);
+  }, [notes]);
   return notes;
 };
 

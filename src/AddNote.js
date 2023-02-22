@@ -7,7 +7,6 @@ import {
 } from "react-native";
 import { useState } from "react";
 import useAddNote from "./customHooks/useAddNote";
-import useFetchNotes from "./customHooks/useFetchNotes";
 
 const AddNote = () => {
   const [title, setTitle] = useState("");

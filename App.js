@@ -1,6 +1,7 @@
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { StyleSheet } from "react-native";
 import Home from "./src/Home";
 import AddNote from "./src/AddNote";
 import Header from "./src/Header";
@@ -17,10 +18,7 @@ export default function App() {
           name="Home"
           options={{
             headerTitle: () => <Header title="Notes" />,
-            headerStyle: {
-              backgroundColor: "purple",
-              height: 120,
-            },
+            headerStyle: styles.headerStyles,
           }}
         />
         <Stack.Screen
@@ -28,10 +26,7 @@ export default function App() {
           name="addNote"
           options={{
             headerTitle: () => <Header title="Add Note" />,
-            headerStyle: {
-              backgroundColor: "purple",
-              height: 120,
-            },
+            headerStyle: styles.headerStyles,
           }}
         />
         <Stack.Screen
@@ -39,13 +34,17 @@ export default function App() {
           name="Detail"
           options={{
             headerTitle: () => <Header title="Edit Note" />,
-            headerStyle: {
-              backgroundColor: "purple",
-              height: 120,
-            },
+            headerStyle: styles.headerStyles,
           }}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  headerStyles: {
+    backgroundColor: "purple",
+    height: 120,
+  },
+});

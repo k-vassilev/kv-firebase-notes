@@ -7,31 +7,27 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { doc, updateDoc, deleteDoc } from "firebase/firestore";
-import { notesRef } from "../firebaseConfig";
+import useUpdateNote from "./customHooks/useUpdateNote";
+import useDeleteNote from "./customHooks/useDeleteNote";
 
 const Detail = ({ route }) => {
   const navigation = useNavigation();
   const [body, setBody] = useState(route.params.item.body);
   const [title, setTitle] = useState(route.params.item.title);
+  const noteID = route.params.item.id;
 
   const handleUpdate = async () => {
-    const docRef = doc(notesRef, route.params.item.id);
-    await updateDoc(docRef, {
-      title,
-      body,
-    });
+    useUpdateNote(noteID, title, body);
     navigation.navigate("Home");
   };
 
   const handleDelete = async () => {
-    const docRef = doc(notesRef, route.params.item.id);
-    await deleteDoc(docRef);
+    useDeleteNote(noteID);
     navigation.navigate("Home");
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
         placeholder="Title"
         value={title}
@@ -78,7 +74,7 @@ const styles = StyleSheet.create({
   },
   inputBody: {
     fontSize: 18,
-    heigth: 300,
+    height: 300,
     width: "97%",
     borderColor: "gray",
     borderWidth: 1 / 2,

@@ -15,7 +15,7 @@ const useFetchNotes = () => {
       setNotes(notesCollection);
     };
     fetchNotes();
-  }, [notes]);
+  }, []);
   return notes;
 };
 

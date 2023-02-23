@@ -7,13 +7,14 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { getDocs } from "firebase/firestore";
 import { notesRef } from "../firebaseConfig";
 
 const Home = () => {
   const navigation = useNavigation();
   const [notes, setNotes] = useState([]);
+  const isFocused = useIsFocused();
   useEffect(() => {
     const fetchNotes = async () => {
       const notesCollection = [];
@@ -24,8 +25,10 @@ const Home = () => {
       });
       setNotes(notesCollection);
     };
-    fetchNotes();
-  }, []);
+    if (isFocused) {
+      fetchNotes();
+    }
+  }, [isFocused]);
 
   const renderItem = ({ item }) => {
     return (

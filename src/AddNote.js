@@ -6,13 +6,16 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import useAddNote from "./customHooks/useAddNote";
 
 const AddNote = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const navigation = useNavigation();
   const handleAddNote = () => {
     useAddNote(title, body);
+    navigation.navigate("Home");
   };
   return (
     <View style={styles.container}>
@@ -27,6 +30,7 @@ const AddNote = () => {
         placeholder="Your Note"
         value={body}
         onChangeText={(text) => setBody(text)}
+        multiline={true}
       />
       <TouchableOpacity style={styles.button} onPress={handleAddNote}>
         <Text style={styles.buttonText}>Add</Text>

@@ -4,6 +4,7 @@ import { notesRef } from "../../firebaseConfig";
 
 const useFetchNotes = () => {
   const [notes, setNotes] = useState([]);
+
   useEffect(() => {
     const fetchNotes = async () => {
       const notesCollection = [];
@@ -14,6 +15,7 @@ const useFetchNotes = () => {
       });
       setNotes(notesCollection);
     };
+
     fetchNotes();
   }, []);
   return notes;

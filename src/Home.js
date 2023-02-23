@@ -1,7 +1,8 @@
-import { View, Button, FlatList, StyleSheet } from "react-native";
+import { View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import useFetchNotes from "../src/customHooks/useFetchNotes";
 import NoteCardView from "./NoteCardView";
+import { Entypo } from "@expo/vector-icons";
 
 const Home = () => {
   const navigation = useNavigation();
@@ -19,10 +20,12 @@ const Home = () => {
         )}
         keyExtractor={(item) => item.id}
       />
-      <Button
-        title="Add Notes"
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => navigation.navigate("addNote")}
-      />
+      >
+        <Entypo name="plus" size={45} color="black" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -31,6 +34,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#c9f5d9",
+  },
+  button: {
+    position: "absolute",
+    bottom: 60,
+    right: 30,
+    backgroundColor: "white",
+    borderRadius: 50,
+    padding: 10,
+    elevation: 7,
   },
 });
 

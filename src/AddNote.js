@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 20,
     marginBottom: 10,
-    height: 200,
+    height: 150,
     width: "97%",
     borderBottomWidth: 1 / 2,
     borderLeftWidth: 1 / 2,
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "red",
     borderRadius: 10,
-    marginTop: 20,
+    marginTop: 5,
     height: 55,
     width: 150,
     alignItems: "center",

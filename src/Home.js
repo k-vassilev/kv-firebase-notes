@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,27 +7,12 @@ import {
   Pressable,
 } from "react-native";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
-import { getDocs } from "firebase/firestore";
-import { notesRef } from "../firebaseConfig";
+import useFetchNotes from "../src/customHooks/useFetchNotes";
 
 const Home = () => {
   const navigation = useNavigation();
-  const [notes, setNotes] = useState([]);
   const isFocused = useIsFocused();
-  useEffect(() => {
-    const fetchNotes = async () => {
-      const notesCollection = [];
-      const querySnapshot = await getDocs(notesRef);
-      querySnapshot.forEach((doc) => {
-        const { title, body } = doc.data();
-        notesCollection.push({ title, body, id: doc.id });
-      });
-      setNotes(notesCollection);
-    };
-    if (isFocused) {
-      fetchNotes();
-    }
-  }, [isFocused]);
+  const notes = useFetchNotes(isFocused);
 
   const renderItem = ({ item }) => {
     return (

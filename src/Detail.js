@@ -12,17 +12,18 @@ import useDeleteNote from "./customHooks/useDeleteNote";
 
 const Detail = ({ route }) => {
   const navigation = useNavigation();
-  const [body, setBody] = useState(route.params.item.body);
-  const [title, setTitle] = useState(route.params.item.title);
+  const [body, setBody] = useState(route.params.item.noteBody);
+  const [title, setTitle] = useState(route.params.item.noteTitle);
   const noteID = route.params.item.id;
+  const categoryPath = route.params.path;
 
   const handleUpdate = async () => {
-    useUpdateNote(noteID, title, body);
+    useUpdateNote(noteID, title, body, categoryPath);
     navigation.navigate("Home");
   };
 
   const handleDelete = async () => {
-    useDeleteNote(noteID);
+    useDeleteNote(noteID, categoryPath);
     navigation.navigate("Home");
   };
 

@@ -6,6 +6,8 @@ import Home from "./src/Home";
 import AddNote from "./src/AddNote";
 import Header from "./src/Header";
 import Detail from "./src/Detail";
+import NoteList from "./src/NoteList";
+import AddCategory from "./src/AddCategory";
 
 const Stack = createStackNavigator();
 
@@ -34,6 +36,22 @@ export default function App() {
           name="Detail"
           options={{
             headerTitle: () => <Header title="Edit Note" />,
+            headerStyle: styles.headerStyles,
+          }}
+        />
+        <Stack.Screen
+          component={NoteList}
+          name="NoteList"
+          options={{
+            headerTitle: () => <Header title="View Category" />,
+            headerStyle: styles.headerStyles,
+          }}
+        />
+        <Stack.Screen
+          component={AddCategory}
+          name="addCategory"
+          options={{
+            headerTitle: () => <Header title="Add Category" />,
             headerStyle: styles.headerStyles,
           }}
         />

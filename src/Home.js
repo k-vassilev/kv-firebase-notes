@@ -1,17 +1,25 @@
-import { View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation, useIsFocused } from "@react-navigation/native";
-import useFetchNotes from "../src/customHooks/useFetchNotes";
-import NoteCardView from "./NoteCardView";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import { collection } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+import CategoryCardView from "./CategoryCardView";
 
 const Home = () => {
   const navigation = useNavigation();
-  const isFocused = useIsFocused();
-  const notes = useFetchNotes(isFocused);
+  const query = collection(db, "categories/");
+  const [docs, loading, error] = useCollectionData(query);
 
   return (
     <View style={styles.container}>
-      <FlatList
+      {/* <FlatList
         data={notes}
         numColumns={2}
         estimatedItemSize={100}
@@ -19,10 +27,18 @@ const Home = () => {
           <NoteCardView item={item} navigation={navigation} />
         )}
         keyExtractor={(item) => item.id}
+      /> */}
+      {loading && <Text>"loading..."</Text>}
+      <FlatList
+        data={docs}
+        renderItem={({ item }) => (
+          <CategoryCardView item={item} navigation={navigation} />
+        )}
+        keyExtractor={(item) => item.id}
       />
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("addNote")}
+        onPress={() => navigation.navigate("addCategory")}
       >
         <Entypo name="plus" size={45} color="black" />
       </TouchableOpacity>

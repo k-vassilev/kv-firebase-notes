@@ -37,12 +37,12 @@ const Home = () => {
         )}
         keyExtractor={(item) => item.id}
       />
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("addCategory")}
       >
         <Entypo name="plus" size={45} color="black" />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

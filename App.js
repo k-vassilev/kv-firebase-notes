@@ -18,7 +18,6 @@ function Main() {
     <Drawer.Navigator>
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Add new category" component={AddCategory} />
-      <Drawer.Screen name="Add new note" component={AddNote} />
     </Drawer.Navigator>
   );
 }

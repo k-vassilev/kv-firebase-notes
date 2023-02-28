@@ -1,10 +1,17 @@
-import { View, Text, StyleSheet, FlatList, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
 import AddNew from "./AddNew";
-import { useEffect } from "react";
+import { Entypo } from "@expo/vector-icons";
 
 const ChildrenList = ({ path }) => {
   const query = collection(db, path);
@@ -31,14 +38,20 @@ const ChildrenList = ({ path }) => {
     </View>
   );
   return (
-    <View>
+    <View style={styles.container}>
       {loading && <Text>"loading..."</Text>}
       <FlatList
         data={data}
         renderItem={({ item }) => <Item item={item} path={path} />}
         keyExtractor={(item) => item.id}
       />
-      <AddNew path={path} />
+      {/* <AddNew path={path} /> */}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("addNote", { path })}
+      >
+        <Entypo name="plus" size={45} color="black" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -46,6 +59,10 @@ const ChildrenList = ({ path }) => {
 export default ChildrenList;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#c9f5d9",
+  },
   noteView: {
     flex: 1,
     backgroundColor: "#fff",
@@ -66,5 +83,14 @@ const styles = StyleSheet.create({
   noteBody: {
     fontSize: 16,
     marginTop: 5,
+  },
+  button: {
+    position: "absolute",
+    bottom: 60,
+    right: 30,
+    backgroundColor: "white",
+    borderRadius: 50,
+    padding: 10,
+    elevation: 7,
   },
 });

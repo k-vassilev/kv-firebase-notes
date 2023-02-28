@@ -9,14 +9,17 @@ import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import useAddNote from "./customHooks/useAddNote";
 
-const AddNote = () => {
+const AddNote = ({ route }) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const navigation = useNavigation();
+  const path = route.params.path;
+
   const handleAddNote = () => {
-    useAddNote(title, body);
+    useAddNote(title, body, path);
     navigation.navigate("Home");
   };
+
   return (
     <View style={styles.container}>
       <TextInput

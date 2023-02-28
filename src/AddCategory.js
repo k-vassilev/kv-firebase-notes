@@ -17,7 +17,7 @@ const AddCategory = () => {
 
   const handleAddNote = async () => {
     const docRef = doc(db, paths, categoryName);
-    await setDoc(docRef, { categoryName });
+    await setDoc(docRef, { categoryName, id: categoryName });
     navigation.navigate("Home");
   };
 

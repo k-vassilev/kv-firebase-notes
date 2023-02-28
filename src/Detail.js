@@ -9,6 +9,9 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import useUpdateNote from "./customHooks/useUpdateNote";
 import useDeleteNote from "./customHooks/useDeleteNote";
+import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { collection } from "firebase/firestore";
+import { db } from "../firebaseConfig";
 
 const Detail = ({ route }) => {
   const navigation = useNavigation();
@@ -17,13 +20,18 @@ const Detail = ({ route }) => {
   const noteID = route.params.item.id;
   const categoryPath = route.params.path;
 
+  const docRef = doc(collection(db, categoryPath), noteID);
+
   const handleUpdate = async () => {
-    useUpdateNote(noteID, title, body, categoryPath);
+    await updateDoc(docRef, {
+      title,
+      body,
+    });
     navigation.navigate("Home");
   };
 
   const handleDelete = async () => {
-    useDeleteNote(noteID, categoryPath);
+    await deleteDoc(docRef);
     navigation.navigate("Home");
   };
 

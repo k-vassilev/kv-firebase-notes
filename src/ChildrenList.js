@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, FlatList, Pressable } from "react-native";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
 import { collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
@@ -7,7 +7,18 @@ import AddNew from "./AddNew";
 
 const ChildrenList = ({ path }) => {
   const query = collection(db, path);
-  const [docs, loading, error] = useCollectionData(query);
+
+  const [value, loading, error] = useCollection(query);
+  const data = [];
+
+  value?.docs.map((doc) => {
+    const category = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    data.push(category);
+  });
+
   const navigation = useNavigation();
 
   const Item = ({ item, path }) => (
@@ -20,8 +31,9 @@ const ChildrenList = ({ path }) => {
   );
   return (
     <View>
+      {loading && <Text>"loading..."</Text>}
       <FlatList
-        data={docs}
+        data={data}
         renderItem={({ item }) => <Item item={item} path={path} />}
         keyExtractor={(item) => item.id}
       />

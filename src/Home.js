@@ -7,7 +7,10 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import {
+  useCollectionData,
+  useCollection,
+} from "react-firebase-hooks/firestore";
 import { collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import CategoryCardView from "./CategoryCardView";
@@ -15,22 +18,24 @@ import CategoryCardView from "./CategoryCardView";
 const Home = () => {
   const navigation = useNavigation();
   const query = collection(db, "categories/");
-  const [docs, loading, error] = useCollectionData(query);
+  // const [docs, loading, error] = useCollectionData(query);
+  const [value, load, err] = useCollection(query);
+
+  const data = [];
+
+  value?.docs.map((doc) => {
+    const category = {
+      id: doc.id,
+      ...doc.data(),
+    };
+    data.push(category);
+  });
 
   return (
     <View style={styles.container}>
-      {/* <FlatList
-        data={notes}
-        numColumns={2}
-        estimatedItemSize={100}
-        renderItem={({ item }) => (
-          <NoteCardView item={item} navigation={navigation} />
-        )}
-        keyExtractor={(item) => item.id}
-      /> */}
-      {loading && <Text>"loading..."</Text>}
+      {load && <Text>"loading..."</Text>}
       <FlatList
-        data={docs}
+        data={data}
         renderItem={({ item }) => (
           <CategoryCardView item={item} navigation={navigation} />
         )}

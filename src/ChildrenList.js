@@ -4,6 +4,7 @@ import { collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
 import AddNew from "./AddNew";
+import { useEffect } from "react";
 
 const ChildrenList = ({ path }) => {
   const query = collection(db, path);
@@ -12,11 +13,11 @@ const ChildrenList = ({ path }) => {
   const data = [];
 
   value?.docs.map((doc) => {
-    const category = {
+    const note = {
       id: doc.id,
       ...doc.data(),
     };
-    data.push(category);
+    data.push(note);
   });
 
   const navigation = useNavigation();

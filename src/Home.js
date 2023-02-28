@@ -7,10 +7,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Entypo } from "@expo/vector-icons";
-import {
-  useCollectionData,
-  useCollection,
-} from "react-firebase-hooks/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
 import { collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import CategoryCardView from "./CategoryCardView";
@@ -18,8 +15,7 @@ import CategoryCardView from "./CategoryCardView";
 const Home = () => {
   const navigation = useNavigation();
   const query = collection(db, "categories/");
-  // const [docs, loading, error] = useCollectionData(query);
-  const [value, load, err] = useCollection(query);
+  const [value, loading, err] = useCollection(query);
 
   const data = [];
 
@@ -33,7 +29,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      {load && <Text>"loading..."</Text>}
+      {loading && <Text>"loading..."</Text>}
       <FlatList
         data={data}
         renderItem={({ item }) => (

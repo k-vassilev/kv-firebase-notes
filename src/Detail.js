@@ -7,16 +7,14 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import useUpdateNote from "./customHooks/useUpdateNote";
-import useDeleteNote from "./customHooks/useDeleteNote";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 
 const Detail = ({ route }) => {
   const navigation = useNavigation();
-  const [body, setBody] = useState(route.params.item.noteBody);
-  const [title, setTitle] = useState(route.params.item.noteTitle);
+  const [noteBody, setNoteBody] = useState(route.params.item.noteBody);
+  const [noteTitle, setNoteTitle] = useState(route.params.item.noteTitle);
   const noteID = route.params.item.id;
   const categoryPath = route.params.path;
 
@@ -24,8 +22,8 @@ const Detail = ({ route }) => {
 
   const handleUpdate = async () => {
     await updateDoc(docRef, {
-      title,
-      body,
+      noteTitle,
+      noteBody,
     });
     navigation.navigate("Home");
   };
@@ -39,14 +37,14 @@ const Detail = ({ route }) => {
     <View style={styles.container}>
       <TextInput
         placeholder="Title"
-        value={title}
-        onChangeText={(text) => setTitle(text)}
+        value={noteTitle}
+        onChangeText={(text) => setNoteTitle(text)}
         style={styles.inputTitle}
       />
       <TextInput
         placeholder="Note"
-        value={body}
-        onChangeText={(text) => setBody(text)}
+        value={noteBody}
+        onChangeText={(text) => setNoteBody(text)}
         style={styles.inputBody}
         multiline={true}
       />

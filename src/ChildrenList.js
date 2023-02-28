@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import AddNew from "./AddNew";
 import { Entypo } from "@expo/vector-icons";
 
-const ChildrenList = ({ path }) => {
+const ChildrenList = ({ path, categoryID }) => {
   const query = collection(db, path);
 
   const [value, loading, error] = useCollection(query);
@@ -46,6 +46,14 @@ const ChildrenList = ({ path }) => {
         keyExtractor={(item) => item.id}
       />
       {/* <AddNew path={path} /> */}
+      <TouchableOpacity
+        style={styles.delete}
+        onPress={() =>
+          navigation.navigate("deleteCategory", { path, categoryID })
+        }
+      >
+        <Entypo name="minus" size={45} color="black" />
+      </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("addNote", { path })}
@@ -89,6 +97,15 @@ const styles = StyleSheet.create({
     bottom: 60,
     right: 30,
     backgroundColor: "white",
+    borderRadius: 50,
+    padding: 10,
+    elevation: 7,
+  },
+  delete: {
+    position: "absolute",
+    bottom: 60,
+    left: 30,
+    backgroundColor: "red",
     borderRadius: 50,
     padding: 10,
     elevation: 7,

@@ -9,6 +9,7 @@ import Detail from "./src/Detail";
 import NoteList from "./src/NoteList";
 import AddCategory from "./src/AddCategory";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import DeleteCategory from "./src/DeleteCategory";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -63,6 +64,14 @@ export default function App() {
           name="addCategory"
           options={{
             headerTitle: () => <Header title="Add Category" />,
+            headerStyle: styles.headerStyles,
+          }}
+        />
+        <Stack.Screen
+          component={DeleteCategory}
+          name="deleteCategory"
+          options={{
+            headerTitle: () => <Header title="Delete Category" />,
             headerStyle: styles.headerStyles,
           }}
         />

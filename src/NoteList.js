@@ -3,9 +3,14 @@ import ChildrenList from "./ChildrenList";
 
 const NoteList = ({ route }) => {
   const categoryName = route.params.item.categoryName;
+  const categoryID = route.params.item.id;
+
   return (
     <View style={styles.container}>
-      <ChildrenList path={`categories/${categoryName}/notes`} />
+      <ChildrenList
+        path={`categories/${categoryName}/notes`}
+        categoryID={categoryID}
+      />
     </View>
   );
 };

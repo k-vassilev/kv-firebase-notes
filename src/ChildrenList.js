@@ -30,12 +30,12 @@ const ChildrenList = ({ path }) => {
   const navigation = useNavigation();
 
   const Item = ({ item, path }) => (
-    <View style={styles.noteView}>
-      <Pressable onPress={() => navigation.navigate("Detail", { item, path })}>
+    <Pressable onPress={() => navigation.navigate("Detail", { item, path })}>
+      <View style={styles.noteView}>
         <Text style={styles.noteTitle}>{item.noteTitle}</Text>
         <Text style={styles.noteBody}>{item.noteBody}</Text>
-      </Pressable>
-    </View>
+      </View>
+    </Pressable>
   );
   return (
     <View style={styles.container}>

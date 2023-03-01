@@ -1,74 +1,100 @@
-import React, { useState } from "react";
+import React from "react";
 import {
+  Text,
+  Platform,
+  KeyboardAvoidingView,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
-  StatusBar,
-  Button,
-  TextInput,
+  View,
 } from "react-native";
-import QuillEditor, { QuillToolbar } from "react-native-cn-quill";
-import { db } from "../firebaseConfig";
-import { doc, setDoc } from "firebase/firestore";
-import { useNavigation } from "@react-navigation/native";
+import {
+  actions,
+  RichEditor,
+  RichToolbar,
+} from "react-native-pell-rich-editor";
+import * as ImagePicker from "expo-image-picker";
 
-export default function NoteTakingScreen() {
-  const navigation = useNavigation();
-  const [title, setTitle] = useState("");
-  const [editorHtml, setEditorHtml] = useState("");
+const NoteTakingScreen = () => {
+  const richText = React.useRef();
 
-  const path = "categories/cats/notes";
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      base64: true,
+    });
 
-  const _editor = React.createRef();
+    const imageMime = result.assets[0];
+    const base64String = result.assets[0].base64;
 
-  const handleEditorChange = (html) => {
-    setEditorHtml(html);
-  };
-
-  const handleAdd = async () => {
-    const docRef = doc(db, path, title);
-    await setDoc(docRef, { noteTitle: title, noteBody: editorHtml });
-    navigation.navigate("Home");
+    if (!result.canceled) {
+      const str = `data:${imageMime};base64,${base64String}`;
+      richText.current.insertImage(str);
+    }
   };
 
   return (
-    <SafeAreaView style={styles.root}>
-      <StatusBar style="auto" />
-      <TextInput
-        style={styles.inputTitle}
-        placeholder="Title"
-        value={title}
-        onChangeText={(text) => setTitle(text)}
-      />
-      <QuillEditor
-        style={styles.editor}
-        ref={_editor}
-        initialHtml=""
-        onHtmlChange={handleEditorChange}
-      />
-      <QuillToolbar editor={_editor} options="full" theme="light" />
-      <Button title="Add" onPress={handleAdd} />
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={{ flex: 1 }}
+        >
+          <Text>Description:</Text>
+          <RichEditor
+            ref={richText}
+            onChange={(descriptionText) => {
+              // console.log("descriptionText:", descriptionText);
+            }}
+          />
+        </KeyboardAvoidingView>
+      </ScrollView>
+
+      <View style={styles.toolbar}>
+        <RichToolbar
+          editor={richText}
+          actions={[
+            actions.insertImage,
+            actions.setBold,
+            actions.setItalic,
+            actions.insertBulletsList,
+            actions.insertOrderedList,
+            actions.insertLink,
+            actions.keyboard,
+            actions.setStrikethrough,
+            actions.setUnderline,
+            actions.removeFormat,
+            actions.insertVideo,
+            actions.checkboxList,
+            actions.undo,
+            actions.redo,
+          ]}
+          onPressAddImage={() => {
+            pickImage();
+          }}
+          iconMap={{
+            [actions.heading1]: ({ tintColor }) => (
+              <Text style={[{ color: tintColor }]}>H1</Text>
+            ),
+          }}
+        />
+      </View>
     </SafeAreaView>
   );
-}
+};
+
+export default NoteTakingScreen;
 
 const styles = StyleSheet.create({
-  title: {
-    fontWeight: "bold",
-    alignSelf: "center",
-    paddingVertical: 10,
-  },
-  root: {
+  container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-    backgroundColor: "#eaeaea",
   },
-  editor: {
-    flex: 1,
-    padding: 0,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginHorizontal: 30,
-    marginVertical: 5,
-    backgroundColor: "white",
+  toolbar: {
+    position: "absolute",
+    bottom: 0,
   },
 });

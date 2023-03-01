@@ -10,6 +10,7 @@ import NoteList from "./src/NoteList";
 import AddCategory from "./src/AddCategory";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import DeleteCategory from "./src/DeleteCategory";
+import NoteTakingScreen from "./src/NoteTakingScreen";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -19,6 +20,7 @@ function Main() {
     <Drawer.Navigator>
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Add new category" component={AddCategory} />
+      <Drawer.Screen name="Quill JS" component={NoteTakingScreen} />
     </Drawer.Navigator>
   );
 }
@@ -72,6 +74,14 @@ export default function App() {
           name="deleteCategory"
           options={{
             headerTitle: () => <Header title="Delete Category" />,
+            headerStyle: styles.headerStyles,
+          }}
+        />
+        <Stack.Screen
+          component={NoteTakingScreen}
+          name="quill"
+          options={{
+            headerTitle: () => <Header title="Editor" />,
             headerStyle: styles.headerStyles,
           }}
         />

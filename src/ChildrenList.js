@@ -10,7 +10,6 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import { collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
-import AddNew from "./AddNew";
 import { Entypo } from "@expo/vector-icons";
 
 const ChildrenList = ({ path, categoryID }) => {
@@ -33,7 +32,7 @@ const ChildrenList = ({ path, categoryID }) => {
     <Pressable onPress={() => navigation.navigate("Detail", { item, path })}>
       <View style={styles.noteView}>
         <Text style={styles.noteTitle}>{item.noteTitle}</Text>
-        <Text style={styles.noteBody}>{item.noteBody}</Text>
+        {/* <Text style={styles.noteBody}>{item.noteBody}</Text> */}
       </View>
     </Pressable>
   );

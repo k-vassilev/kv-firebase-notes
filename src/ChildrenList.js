@@ -14,7 +14,6 @@ import { Entypo } from "@expo/vector-icons";
 
 const ChildrenList = ({ path, categoryID }) => {
   const query = collection(db, path);
-
   const [value, loading, error] = useCollection(query);
   const data = [];
 
@@ -32,7 +31,6 @@ const ChildrenList = ({ path, categoryID }) => {
     <Pressable onPress={() => navigation.navigate("Detail", { item, path })}>
       <View style={styles.noteView}>
         <Text style={styles.noteTitle}>{item.noteTitle}</Text>
-        {/* <Text style={styles.noteBody}>{item.noteBody}</Text> */}
       </View>
     </Pressable>
   );
@@ -44,7 +42,6 @@ const ChildrenList = ({ path, categoryID }) => {
         renderItem={({ item }) => <Item item={item} path={path} />}
         keyExtractor={(item) => item.id}
       />
-      {/* <AddNew path={path} /> */}
       <TouchableOpacity
         style={styles.delete}
         onPress={() =>

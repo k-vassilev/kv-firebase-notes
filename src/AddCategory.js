@@ -9,16 +9,22 @@ import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { db } from "../firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth();
 
 const AddCategory = () => {
   const [categoryName, setCategoryName] = useState("");
   const navigation = useNavigation();
-  const paths = "categories";
 
   const handleAddNote = async () => {
-    const docRef = doc(db, paths, categoryName);
-    await setDoc(docRef, { categoryName, id: categoryName });
-    navigation.navigate("Home");
+    if (auth.currentUser) {
+      const userId = auth.currentUser?.uid;
+      const paths = `users/${userId}/categories`;
+      const docRef = doc(db, paths, categoryName);
+      await setDoc(docRef, { categoryName, id: categoryName });
+      navigation.navigate("Home");
+    }
   };
 
   return (

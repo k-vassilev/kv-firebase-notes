@@ -1,7 +1,7 @@
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { StyleSheet, View, Button } from "react-native";
+import { StyleSheet } from "react-native";
 import Home from "./src/Home";
 import AddNote from "./src/AddNote";
 import Header from "./src/Header";
@@ -113,14 +113,6 @@ export default function App() {
           name="deleteCategory"
           options={{
             headerTitle: () => <Header title="Delete Category" />,
-            headerStyle: styles.headerStyles,
-          }}
-        />
-        <Stack.Screen
-          component={NoteTakingScreen}
-          name="quill"
-          options={{
-            headerTitle: () => <Header title="Editor" />,
             headerStyle: styles.headerStyles,
           }}
         />

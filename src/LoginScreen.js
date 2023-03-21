@@ -46,8 +46,6 @@ const LoginScreen = () => {
           await setDoc(docRef, { userEmail, id: userId });
         };
         createUser();
-
-        console.log("SignedUp with: ", userEmail);
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -58,7 +56,6 @@ const LoginScreen = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log("Logged in with: ", user.email);
       })
       .catch((error) => {
         const errorMessage = error.message;

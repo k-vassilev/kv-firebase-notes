@@ -1,12 +1,5 @@
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Entypo } from "@expo/vector-icons";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
@@ -14,8 +7,6 @@ import CategoryCardView from "./CategoryCardView";
 import { getAuth } from "firebase/auth";
 
 const auth = getAuth();
-
-console.log("Home");
 
 const Home = () => {
   const navigation = useNavigation();
@@ -46,12 +37,6 @@ const Home = () => {
         )}
         keyExtractor={(item) => item.id}
       />
-      {/* <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("addCategory")}
-      >
-        <Entypo name="plus" size={45} color="black" />
-      </TouchableOpacity> */}
     </View>
   );
 };

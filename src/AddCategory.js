@@ -25,7 +25,6 @@ const AddCategory = () => {
       await setDoc(docRef, { categoryName, id: categoryName });
       navigation.navigate("Home");
     }
-    console.log("AddCategory");
   };
 
   return (

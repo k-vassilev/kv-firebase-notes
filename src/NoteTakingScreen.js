@@ -15,8 +15,6 @@ import {
 } from "react-native-pell-rich-editor";
 import * as ImagePicker from "expo-image-picker";
 
-console.log("Note Taking Screen");
-
 const NoteTakingScreen = () => {
   const richText = React.useRef();
 

@@ -17,7 +17,6 @@ const AddNote = ({ route }) => {
 
   const handleAddNote = () => {
     useAddNote(title, body, path);
-    console.log("AddNote");
     navigation.navigate("Home");
   };
 

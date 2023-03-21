@@ -33,8 +33,6 @@ const Detail = ({ route }) => {
     navigation.navigate("Home");
   };
 
-  console.log("Detail");
-
   return (
     <View style={styles.container}>
       <TextInput

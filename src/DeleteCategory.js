@@ -9,14 +9,17 @@ import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { db } from "../firebaseConfig";
 import { doc, setDoc, deleteDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth();
 
 const DeleteCategory = ({ route }) => {
   const navigation = useNavigation();
-
+  const userId = auth.currentUser?.uid;
   const docRef = route.params.categoryID;
 
   const handleDelete = async () => {
-    await deleteDoc(doc(db, "categories", docRef));
+    await deleteDoc(doc(db, `users/${userId}/categories`, docRef));
     navigation.navigate("Home");
   };
 

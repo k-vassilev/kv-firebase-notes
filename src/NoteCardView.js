@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
+console.log("NoteCardView");
 
 const NoteCardView = ({ item, navigation }) => {
   return (

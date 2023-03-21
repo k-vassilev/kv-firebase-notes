@@ -16,6 +16,7 @@ const AddNew = ({ path }) => {
   const handleAddNote = async () => {
     const docRef = doc(db, path, title);
     await setDoc(docRef, { noteTitle: title, noteBody: body });
+    console.log("AddNew");
   };
 
   return (

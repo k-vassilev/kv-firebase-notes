@@ -15,6 +15,7 @@ import { Entypo } from "@expo/vector-icons";
 const ChildrenList = ({ path, categoryID }) => {
   const query = collection(db, path);
 
+  console.log("ChildrenList");
   const [value, loading, error] = useCollection(query);
   const data = [];
 

@@ -3,10 +3,14 @@ import { db } from "../firebaseConfig";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { collection } from "firebase/firestore";
 import TextWithCircle from "./TextWithCircle";
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth();
 
 const CategoryCardView = ({ item, navigation }) => {
+  const userId = auth.currentUser?.uid;
   const categoryName = item.categoryName;
-  const path = `categories/${categoryName}/notes`;
+  const path = `users/${userId}/categories/${categoryName}/notes`;
   const query = collection(db, path);
   const [docs, loading, error] = useCollectionData(query);
   const numberOfNotes = docs?.length;

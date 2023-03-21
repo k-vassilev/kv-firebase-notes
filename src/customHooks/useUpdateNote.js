@@ -5,6 +5,7 @@ import { collection } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 
 const useUpdateNote = async (id, title, body, categoryPath) => {
+  console.log("useUpdateNote");
   const notesRef = collection(db, categoryPath);
   const docRef = doc(notesRef, id);
   await updateDoc(docRef, {

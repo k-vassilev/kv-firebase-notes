@@ -12,6 +12,8 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
+import { db } from "../firebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
 
 const auth = getAuth();
 
@@ -19,6 +21,8 @@ const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
+
+  const path = "users";
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -34,7 +38,16 @@ const LoginScreen = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log("SignedUp with: ", user.email);
+        const userEmail = user.email;
+        const userId = user.uid;
+
+        const docRef = doc(db, path, userId);
+        const createUser = async () => {
+          await setDoc(docRef, { userEmail, id: userId });
+        };
+        createUser();
+
+        console.log("SignedUp with: ", userEmail);
       })
       .catch((error) => {
         const errorMessage = error.message;

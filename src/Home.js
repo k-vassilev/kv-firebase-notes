@@ -11,10 +11,19 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import { collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import CategoryCardView from "./CategoryCardView";
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth();
+
+console.log("Home");
 
 const Home = () => {
   const navigation = useNavigation();
-  const query = collection(db, "categories/");
+
+  const userId = auth.currentUser?.uid;
+  const paths = `users/${userId}/categories/`;
+
+  const query = collection(db, paths);
   const [value, loading, err] = useCollection(query);
 
   const data = [];

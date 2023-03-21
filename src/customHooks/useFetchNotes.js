@@ -19,7 +19,7 @@ const useFetchNotes = (isFocused) => {
 
     fetchNotes();
   }, [isFocused]);
-
+  console.log("useFetchNotes");
   return notes;
 };
 

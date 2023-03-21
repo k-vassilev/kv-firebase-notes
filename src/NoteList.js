@@ -1,14 +1,20 @@
 import { View, StyleSheet } from "react-native";
 import ChildrenList from "./ChildrenList";
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth();
 
 const NoteList = ({ route }) => {
+  const userId = auth.currentUser?.uid;
+
   const categoryName = route.params.item.categoryName;
   const categoryID = route.params.item.id;
+  console.log("Note List");
 
   return (
     <View style={styles.container}>
       <ChildrenList
-        path={`categories/${categoryName}/notes`}
+        path={`users/${userId}/categories/${categoryName}/notes`}
         categoryID={categoryID}
       />
     </View>

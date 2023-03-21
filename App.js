@@ -1,23 +1,57 @@
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View, Button } from "react-native";
 import Home from "./src/Home";
 import AddNote from "./src/AddNote";
 import Header from "./src/Header";
 import Detail from "./src/Detail";
 import NoteList from "./src/NoteList";
 import AddCategory from "./src/AddCategory";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from "@react-navigation/drawer";
 import DeleteCategory from "./src/DeleteCategory";
 import NoteTakingScreen from "./src/NoteTakingScreen";
+import LoginScreen from "./src/LoginScreen";
+import { getAuth, signOut } from "firebase/auth";
+import { useNavigation } from "@react-navigation/native";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
+const auth = getAuth();
+
 function Main() {
+  const navigation = useNavigation();
+  const exit = () =>
+    signOut(auth)
+      .then(() => {
+        navigation.replace("Login");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+
+  function CustomDrawerContent(props) {
+    return (
+      <DrawerContentScrollView {...props}>
+        <DrawerItemList {...props} />
+        <DrawerItem
+          label={`SignOut from: ${auth.currentUser?.email}`}
+          onPress={exit}
+        />
+      </DrawerContentScrollView>
+    );
+  }
+
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+    >
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Add new category" component={AddCategory} />
       <Drawer.Screen name="Quill JS" component={NoteTakingScreen} />
@@ -29,6 +63,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          component={LoginScreen}
+          name="Login"
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           component={Main}
           name="Main"

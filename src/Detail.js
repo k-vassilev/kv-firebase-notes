@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+// import PushNotification from "./PushNotification";
 
 const Detail = ({ route }) => {
   const navigation = useNavigation();
@@ -69,6 +70,7 @@ const Detail = ({ route }) => {
         style={styles.inputBody}
         multiline={true}
       />
+      {/* <PushNotification /> */}
       <View style={styles.buttonView}>
         <TouchableOpacity style={styles.button} onPress={handleUpdate}>
           <Text style={styles.buttonText}>Save</Text>

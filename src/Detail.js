@@ -5,6 +5,8 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Alert,
+  Share,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
@@ -33,6 +35,25 @@ const Detail = ({ route }) => {
     navigation.navigate("Home");
   };
 
+  const handleShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `Title: ${noteTitle} Note: ${noteBody}`,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -50,7 +71,10 @@ const Detail = ({ route }) => {
       />
       <View style={styles.buttonView}>
         <TouchableOpacity style={styles.button} onPress={handleUpdate}>
-          <Text style={styles.buttonText}>Update</Text>
+          <Text style={styles.buttonText}>Save</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleShare}>
+          <Text style={styles.buttonText}>Share</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleDelete}>
           <Text style={styles.buttonText}>Delete</Text>

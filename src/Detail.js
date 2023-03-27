@@ -14,7 +14,7 @@ import { collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import PushNotification from "./PushNotification";
 
-const duration = 5;
+const duration = 10;
 
 const Detail = ({ route }) => {
   const navigation = useNavigation();

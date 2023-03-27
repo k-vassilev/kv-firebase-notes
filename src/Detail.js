@@ -14,12 +14,11 @@ import { collection } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import PushNotification from "./PushNotification";
 
-const duration = 10;
-
 const Detail = ({ route }) => {
   const navigation = useNavigation();
   const [noteBody, setNoteBody] = useState(route.params.item.noteBody);
   const [noteTitle, setNoteTitle] = useState(route.params.item.noteTitle);
+  const [timer, setTimer] = useState(0);
   const noteID = route.params.item.id;
   const categoryPath = route.params.path;
 
@@ -72,10 +71,16 @@ const Detail = ({ route }) => {
         style={styles.inputBody}
         multiline={true}
       />
+      <TextInput
+        placeholder="Remind me in x seconds"
+        value={timer}
+        onChangeText={(number) => setTimer(number)}
+        multiline={true}
+      />
       <PushNotification
         noteTitle={noteTitle}
         noteBody={noteBody}
-        noteRemainderDuration={duration}
+        noteRemainderDuration={Number(timer)}
       />
       <View style={styles.buttonView}>
         <TouchableOpacity style={styles.button} onPress={handleUpdate}>
